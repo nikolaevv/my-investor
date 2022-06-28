@@ -1,1 +1,21 @@
-{}
+{
+    "App": {
+        "Host": "0.0.0.0",
+        "Port": "8080"
+    },
+    "Log": {
+        "Level": "debug"
+    },
+    "DB": {
+        "Name": "investor",
+        "Pass": "0000",
+        "Host": "0.0.0.0",
+        "User": "postgres",
+        "Type": "postgres",
+        "Port": "5432",
+        "SSLMode": "disable"
+    },
+    "Auth": {
+        "JWTSecret": "QD8aciXgwcqmjJnNFCaXhaZGC8LyPFbzHb5d324Scc8rMsNijze4NFtjiP4Ryse5"
+    }
+}

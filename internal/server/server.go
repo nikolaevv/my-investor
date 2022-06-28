@@ -2,10 +2,8 @@ package server
 
 import (
 	"fmt"
-	"net/http"
 
 	"github.com/nikolaevv/my-investor/internal/servicecontainer"
-	"github.com/rs/cors"
 )
 
 func New(configpath string) (*Server, error) {
@@ -25,19 +23,11 @@ type Server struct {
 
 func (s *Server) Start() error {
 	s.configureRouter()
-
-	c := cors.New(cors.Options{
-		AllowedOrigins:   []string{"http://localhost:3000"},
-		AllowedMethods:   []string{"POST", "GET", "PUT", "DELETE"},
-		AllowedHeaders:   []string{"Authorization", "Content-Type"},
-		AllowCredentials: true,
-		Debug:            true,
-	})
-
-	modifiedHandler := c.Handler(s.cont.Router)
-
 	s.cont.Logger.Info("Starting API server")
-	return http.ListenAndServe(fmt.Sprintf("%s:%s", s.cont.Config.App.Host, s.cont.Config.App.Port), modifiedHandler)
+
+	return s.cont.Router.Run(
+		fmt.Sprintf("%s:%s", s.cont.Config.App.Host, s.cont.Config.App.Port),
+	)
 }
 
 func (s *Server) configureRouter() {
