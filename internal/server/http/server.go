@@ -31,5 +31,5 @@ func (s *Server) Start() error {
 }
 
 func (s *Server) configureRouter() {
-
+	s.cont.Router.GET("/share", s.cont.Handler.GetStock)
 }
