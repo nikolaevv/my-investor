@@ -11,7 +11,7 @@ import (
 	"github.com/nikolaevv/my-investor/pkg/tinkoff/investapi"
 )
 
-func (h *Handler) GetStock(c *gin.Context) {
+func (h *Handler) GetShare(c *gin.Context) {
 	var params requests.GettingStock
 
 	if err := c.Bind(&params); err != nil {
