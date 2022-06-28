@@ -8,6 +8,8 @@ services:
             - 8080:8080
         networks:
             - postgres
+        volumes:
+            - go-modules:/go/pkg/mod
         depends_on:
             - db
         environment:
@@ -31,3 +33,6 @@ services:
 networks:
     postgres:
         driver: bridge
+
+volumes:
+    go-modules: # Define the volume
