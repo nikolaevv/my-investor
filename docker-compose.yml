@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+    api:
+        build: ./
+        command: ./main
+        ports:
+            - 8080:8080
+        networks:
+            - postgres
+            - redis
+            - minio
+        depends_on:
+            - db
+            - redis
+            - minio
+        environment:
+            - db_name=sapmp
+            - db_pass=0000
+            - db_user=postgres
+            - db_type=postgres
+            - db_host=db
+            - db_port=5432
+    db:
+        image: postgres:14-alpine
+        volumes:
+            - ./postgres_data:/var/lib/postgresql/data
+        environment:
+            - POSTGRES_USER=$db_user
+            - POSTGRES_PASSWORD=$db_pass
+            - POSTGRES_DB=$db_name
+        ports:
+            - 5431:5432
+        networks:
+            - postgres
+
+networks:
+    postgres:
+        driver: bridge
