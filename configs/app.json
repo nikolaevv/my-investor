@@ -17,5 +17,9 @@
     },
     "Auth": {
         "JWTSecret": "QD8aciXgwcqmjJnNFCaXhaZGC8LyPFbzHb5d324Scc8rMsNijze4NFtjiP4Ryse5"
+    },
+    "Tinkoff": {
+        "Token": "t.C9DbOPRd7JLu5KoE6O6CSPbpDdE1yky__2FLRJJB2DPx3VG1hI2k2LFvNRoKIVMdkhC8xBCJIyQ1KyG5LkUyOw",
+        "URL": "invest-public-api.tinkoff.ru:443"
     }
 }
