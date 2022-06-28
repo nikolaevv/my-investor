@@ -3,12 +3,18 @@ package servicecontainer
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/nikolaevv/my-investor/internal/handlers"
+	"github.com/nikolaevv/my-investor/internal/repository"
 	"github.com/nikolaevv/my-investor/pkg/config"
 	"github.com/sirupsen/logrus"
 )
 
 func New(filename string) (*Container, error) {
 	cfg, err := config.LoadConfig(filename)
+	if err != nil {
+		return nil, err
+	}
+
+	repo, err := repository.New(cfg)
 	if err != nil {
 		return nil, err
 	}
@@ -23,6 +29,7 @@ func New(filename string) (*Container, error) {
 		Logger:  logrus.New(),
 		Handler: hand,
 		Router:  gin.Default(),
+		Repo:    repo,
 	}, nil
 }
 
@@ -31,4 +38,5 @@ type Container struct {
 	Logger  *logrus.Logger
 	Handler *handlers.Handler
 	Router  *gin.Engine
+	Repo    *repository.Repository
 }
