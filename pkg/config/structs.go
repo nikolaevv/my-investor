@@ -1,10 +1,11 @@
 package config
 
 type Config struct {
-	App  Application
-	DB   Database
-	Auth Auth
-	Log  Logger
+	App     Application
+	DB      Database
+	Auth    Auth
+	Log     Logger
+	Tinkoff TinkoffAPI
 }
 
 type Application struct {
@@ -28,4 +29,9 @@ type Database struct {
 
 type Auth struct {
 	JWTSecret string
+}
+
+type TinkoffAPI struct {
+	Token string
+	URL   string
 }

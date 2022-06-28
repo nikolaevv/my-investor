@@ -4,7 +4,7 @@ import (
 	"flag"
 	"log"
 
-	"github.com/nikolaevv/my-investor/internal/server"
+	httpServer "github.com/nikolaevv/my-investor/internal/server/http"
 )
 
 var (
@@ -14,7 +14,7 @@ var (
 func main() {
 	flag.Parse()
 
-	s, err := server.New(*configPath)
+	s, err := httpServer.New(*configPath)
 	if err != nil {
 		log.Fatal(err)
 	}
