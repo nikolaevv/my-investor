@@ -1,0 +1,34 @@
+package config
+
+import (
+	"errors"
+
+	"github.com/spf13/viper"
+)
+
+func LoadConfig(filename string) (*Config, error) {
+	v := viper.New()
+
+	v.SetConfigFile(filename)
+	v.AutomaticEnv()
+
+	if err := v.ReadInConfig(); err != nil {
+		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
+			return nil, errors.New("config file not found")
+		}
+		return nil, err
+	}
+
+	return ParseConfig(v)
+}
+
+func ParseConfig(v *viper.Viper) (*Config, error) {
+	var c Config
+
+	err := v.Unmarshal(&c)
+	if err != nil {
+		return nil, err
+	}
+
+	return &c, nil
+}
