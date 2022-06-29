@@ -9,7 +9,7 @@ import (
 type User interface {
 	Create(user *models.User) (uint, error)
 	UpdateRefreshToken(userId uint, refreshToken string) error
-	GetApplicantByLogin(login string) (*models.User, error)
+	GetUserByLogin(login string) (*models.User, error)
 }
 
 type Repository struct {

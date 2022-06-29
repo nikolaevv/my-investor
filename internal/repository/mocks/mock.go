@@ -49,19 +49,19 @@ func (mr *MockUserMockRecorder) Create(user interface{}) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockUser)(nil).Create), user)
 }
 
-// GetApplicantByLogin mocks base method.
-func (m *MockUser) GetApplicantByLogin(login string) (*models.User, error) {
+// GetUserByLogin mocks base method.
+func (m *MockUser) GetUserByLogin(login string) (*models.User, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetApplicantByLogin", login)
+	ret := m.ctrl.Call(m, "GetUserByLogin", login)
 	ret0, _ := ret[0].(*models.User)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// GetApplicantByLogin indicates an expected call of GetApplicantByLogin.
-func (mr *MockUserMockRecorder) GetApplicantByLogin(login interface{}) *gomock.Call {
+// GetUserByLogin indicates an expected call of GetUserByLogin.
+func (mr *MockUserMockRecorder) GetUserByLogin(login interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetApplicantByLogin", reflect.TypeOf((*MockUser)(nil).GetApplicantByLogin), login)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserByLogin", reflect.TypeOf((*MockUser)(nil).GetUserByLogin), login)
 }
 
 // UpdateRefreshToken mocks base method.

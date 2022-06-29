@@ -23,7 +23,7 @@ func (r *UserDB) UpdateRefreshToken(userId uint, refreshToken string) error {
 	return result.Error
 }
 
-func (r *UserDB) GetApplicantByLogin(login string) (*models.User, error) {
+func (r *UserDB) GetUserByLogin(login string) (*models.User, error) {
 	var user models.User
 	result := r.DB.Model(&models.User{}).First(&user, "login = ?", login)
 	return &user, result.Error
