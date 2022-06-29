@@ -13,7 +13,7 @@ services:
         depends_on:
             - db
         environment:
-            - db_name=sapmp
+            - db_name=investor
             - db_pass=0000
             - db_user=postgres
             - db_type=postgres
