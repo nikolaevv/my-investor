@@ -28,3 +28,9 @@ func (r *UserDB) GetUserByLogin(login string) (*models.User, error) {
 	result := r.DB.Model(&models.User{}).First(&user, "login = ?", login)
 	return &user, result.Error
 }
+
+func (r *UserDB) GetUserByID(id int) (*models.User, error) {
+	var user models.User
+	result := r.DB.Model(&models.User{}).First(&user, "id = ?", id)
+	return &user, result.Error
+}

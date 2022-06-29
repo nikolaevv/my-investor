@@ -19,3 +19,16 @@ func CreateInstrumentsServiceClient(url string, token string) InstrumentsService
 
 	return NewInstrumentsServiceClient(conn)
 }
+
+func CreateSandboxServiceClient(url string, token string) SandboxServiceClient {
+	conn, err := grpc.Dial(
+		url,
+		grpc.WithTransportCredentials(credentials.NewClientTLSFromCert(nil, "")),
+		grpc.WithPerRPCCredentials(oauth.NewOauthAccess(&oauth2.Token{AccessToken: token})),
+	)
+	if err != nil {
+		panic(err)
+	}
+
+	return NewSandboxServiceClient(conn)
+}
