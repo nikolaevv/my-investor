@@ -22,8 +22,8 @@ import (
 func TestHandler_signUp(t *testing.T) {
 	type mockRegister func(mockUser *mock_repository.MockUser, user *models.User)
 	type mockHashPassword func(mockHash *mock_hash.MockPasswords, password string)
-	type mockCreateAccessToken func(mockUser *mock_auth.MockJWT, signingKey string)
-	type mockCreateRefreshToken func(mockUser *mock_auth.MockJWT)
+	type mockCreateAccessToken func(mockJWT *mock_auth.MockJWT, signingKey string)
+	type mockCreateRefreshToken func(mockJWT *mock_auth.MockJWT)
 	type mockSetRefreshToken func(mockUser *mock_repository.MockUser)
 
 	testTable := []struct {
