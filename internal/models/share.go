@@ -8,4 +8,5 @@ type Share struct {
 	ClassCode string
 	User      User
 	UserID    uint
+	Quantity  int
 }
