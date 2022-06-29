@@ -1,24 +1,36 @@
 package handlers
 
 import (
+	"flag"
+
+	"github.com/nikolaevv/my-investor/internal/repository"
+	"github.com/nikolaevv/my-investor/pkg/auth"
 	"github.com/nikolaevv/my-investor/pkg/config"
+	"github.com/nikolaevv/my-investor/pkg/hash"
 )
 
-type Handler struct {
-	//Repo       *repository.Repository
-	Config *config.Config
+var (
+	ConfigPath = flag.String("configPath", "../../configs/app.json", "path to config file")
+)
+
+type Instruments struct {
+	Repo   *repository.Repository
+	Hasher *hash.Hasher
+	Auth   *auth.Authentication
 }
 
-func New(config *config.Config) (*Handler, error) {
-	/*
-		repo, err := repository.New(config)
-		if err != nil {
-			return nil, err
-		}
-	*/
+type Handler struct {
+	Repo   *repository.Repository
+	Config *config.Config
+	Hasher *hash.Hasher
+	Auth   *auth.Authentication
+}
 
+func NewHandler(config *config.Config, instruments *Instruments) (*Handler, error) {
 	return &Handler{
-		//Repo:       repo,
 		Config: config,
+		Repo:   instruments.Repo,
+		Hasher: instruments.Hasher,
+		Auth:   instruments.Auth,
 	}, nil
 }
