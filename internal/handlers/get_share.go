@@ -12,7 +12,7 @@ import (
 )
 
 func (h *Handler) GetShare(c *gin.Context) {
-	var params requests.GettingStock
+	var params requests.GettingShare
 	if err := c.Bind(&params); err != nil {
 		c.String(http.StatusBadRequest, fmt.Sprintf("error: %s", err))
 		return
