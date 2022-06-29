@@ -32,4 +32,5 @@ func (s *Server) Start() error {
 
 func (s *Server) configureRouter() {
 	s.cont.Router.GET("/share", s.cont.Handler.GetShare)
+	s.cont.Router.POST("/signup", s.cont.Handler.SignUp)
 }
