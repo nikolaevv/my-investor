@@ -1,9 +1,12 @@
 package handlers
 
 import (
+	"context"
+
 	"github.com/nikolaevv/my-investor/internal/repository"
 	"github.com/nikolaevv/my-investor/pkg/auth"
 	"github.com/nikolaevv/my-investor/pkg/config"
+	"github.com/nikolaevv/my-investor/pkg/tinkoff/investapi"
 )
 
 type Tokens struct {
@@ -33,4 +36,15 @@ func CreateUserSession(userId uint, repo *repository.Repository, authManager *au
 	repo.User.UpdateRefreshToken(userId, refreshToken)
 
 	return result, err
+}
+
+func CreateTinkoffSandboxAccount(URL string, Token string, ctx context.Context) (string, error) {
+	sandboxClient := investapi.CreateSandboxServiceClient(URL, Token)
+	openAccountReq := investapi.OpenSandboxAccountRequest{}
+	protoOpenAccountMsg, err := sandboxClient.OpenSandboxAccount(ctx, &openAccountReq)
+	if err != nil {
+		return "", err
+	}
+
+	return protoOpenAccountMsg.AccountId, nil
 }

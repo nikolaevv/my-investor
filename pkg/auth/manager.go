@@ -24,7 +24,7 @@ type JWT interface {
 	CreateAccessToken(userId int, expireDuration time.Duration, signingKey string) (string, error)
 	CreateRefreshToken() (string, error)
 	ParseToken(accessToken string, signingKey string) (map[string]interface{}, error)
-	AuthorizateUser(r *http.Request, SigningKey string) (*Claims, error)
+	AuthorizateUser(headers http.Header, SigningKey string) (*Claims, error)
 }
 
 type Authentication struct {
@@ -86,18 +86,18 @@ func (m *JWTManager) ParseToken(accessToken string, signingKey string) (map[stri
 	return claims, nil
 }
 
-func (m *JWTManager) AuthorizateUser(r *http.Request, SigningKey string) (*Claims, error) {
-	reqToken := r.Header.Get("Authorization")
+func (m *JWTManager) AuthorizateUser(headers http.Header, SigningKey string) (*Claims, error) {
+	reqToken := headers.Get("Authorization")
 	splitToken := strings.Split(reqToken, "Bearer ")
 	if len(splitToken) < 2 {
-		return &Claims{}, fmt.Errorf("invalid Authorization header")
+		return nil, fmt.Errorf("invalid Authorization header")
 	}
 
 	reqToken = splitToken[1]
 
 	parsedData, err := m.ParseToken(reqToken, SigningKey)
 	if err != nil {
-		return &Claims{}, err
+		return nil, err
 	}
 	userId := int(parsedData["id"].(float64))
 

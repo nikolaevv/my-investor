@@ -49,6 +49,21 @@ func (mr *MockUserMockRecorder) Create(user interface{}) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockUser)(nil).Create), user)
 }
 
+// GetUserByID mocks base method.
+func (m *MockUser) GetUserByID(id int) (*models.User, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetUserByID", id)
+	ret0, _ := ret[0].(*models.User)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetUserByID indicates an expected call of GetUserByID.
+func (mr *MockUserMockRecorder) GetUserByID(id interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserByID", reflect.TypeOf((*MockUser)(nil).GetUserByID), id)
+}
+
 // GetUserByLogin mocks base method.
 func (m *MockUser) GetUserByLogin(login string) (*models.User, error) {
 	m.ctrl.T.Helper()
@@ -76,4 +91,42 @@ func (m *MockUser) UpdateRefreshToken(userId uint, refreshToken string) error {
 func (mr *MockUserMockRecorder) UpdateRefreshToken(userId, refreshToken interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateRefreshToken", reflect.TypeOf((*MockUser)(nil).UpdateRefreshToken), userId, refreshToken)
+}
+
+// MockShare is a mock of Share interface.
+type MockShare struct {
+	ctrl     *gomock.Controller
+	recorder *MockShareMockRecorder
+}
+
+// MockShareMockRecorder is the mock recorder for MockShare.
+type MockShareMockRecorder struct {
+	mock *MockShare
+}
+
+// NewMockShare creates a new mock instance.
+func NewMockShare(ctrl *gomock.Controller) *MockShare {
+	mock := &MockShare{ctrl: ctrl}
+	mock.recorder = &MockShareMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockShare) EXPECT() *MockShareMockRecorder {
+	return m.recorder
+}
+
+// Create mocks base method.
+func (m *MockShare) Create(share *models.Share) (uint, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Create", share)
+	ret0, _ := ret[0].(uint)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Create indicates an expected call of Create.
+func (mr *MockShareMockRecorder) Create(share interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockShare)(nil).Create), share)
 }

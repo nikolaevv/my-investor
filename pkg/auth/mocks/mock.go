@@ -37,18 +37,18 @@ func (m *MockJWT) EXPECT() *MockJWTMockRecorder {
 }
 
 // AuthorizateUser mocks base method.
-func (m *MockJWT) AuthorizateUser(r *http.Request, SigningKey string) (*auth.Claims, error) {
+func (m *MockJWT) AuthorizateUser(headers http.Header, SigningKey string) (*auth.Claims, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "AuthorizateUser", r, SigningKey)
+	ret := m.ctrl.Call(m, "AuthorizateUser", headers, SigningKey)
 	ret0, _ := ret[0].(*auth.Claims)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // AuthorizateUser indicates an expected call of AuthorizateUser.
-func (mr *MockJWTMockRecorder) AuthorizateUser(r, SigningKey interface{}) *gomock.Call {
+func (mr *MockJWTMockRecorder) AuthorizateUser(headers, SigningKey interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AuthorizateUser", reflect.TypeOf((*MockJWT)(nil).AuthorizateUser), r, SigningKey)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AuthorizateUser", reflect.TypeOf((*MockJWT)(nil).AuthorizateUser), headers, SigningKey)
 }
 
 // CreateAccessToken mocks base method.
