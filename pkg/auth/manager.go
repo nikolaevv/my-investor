@@ -19,7 +19,32 @@ type Claims struct {
 	Id int `json:"id"`
 }
 
-func CreateJWT(userId int, expireDuration time.Duration, signingKey string) (string, error) {
+//go:generate mockgen -source=manager.go -destination=mocks/mock.go
+type JWT interface {
+	CreateAccessToken(userId int, expireDuration time.Duration, signingKey string) (string, error)
+	CreateRefreshToken() (string, error)
+	ParseToken(accessToken string, signingKey string) (map[string]interface{}, error)
+	AuthorizateUser(r *http.Request, SigningKey string) (*Claims, error)
+}
+
+type Authentication struct {
+	JWT
+}
+
+func NewAuth() *Authentication {
+	return &Authentication{
+		JWT: NewJWTManager(),
+	}
+}
+
+type JWTManager struct {
+}
+
+func NewJWTManager() *JWTManager {
+	return &JWTManager{}
+}
+
+func (m *JWTManager) CreateAccessToken(userId int, expireDuration time.Duration, signingKey string) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, Claims{
 		Id: userId,
 	})
@@ -27,7 +52,7 @@ func CreateJWT(userId int, expireDuration time.Duration, signingKey string) (str
 	return token.SignedString([]byte(signingKey))
 }
 
-func CreateRefreshToken() (string, error) {
+func (m *JWTManager) CreateRefreshToken() (string, error) {
 	b := make([]byte, 32)
 	currentTime := rand.NewSource(time.Now().Unix())
 	randomizedValue := rand.New(currentTime)
@@ -40,16 +65,7 @@ func CreateRefreshToken() (string, error) {
 	return fmt.Sprintf("%x", b), nil
 }
 
-func AuthorizateRole(r *http.Request, role string, signingKey string) (int, error) {
-	claims, err := AuthorizateUser(r, signingKey)
-	if err != nil {
-		return 0, err
-	}
-
-	return claims.Id, nil
-}
-
-func ParseToken(accessToken string, signingKey string) (map[string]interface{}, error) {
+func (m *JWTManager) ParseToken(accessToken string, signingKey string) (map[string]interface{}, error) {
 	token, err := jwt.Parse(accessToken, func(token *jwt.Token) (i interface{}, err error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("unexpected signing method")
@@ -70,7 +86,7 @@ func ParseToken(accessToken string, signingKey string) (map[string]interface{}, 
 	return claims, nil
 }
 
-func AuthorizateUser(r *http.Request, SigningKey string) (*Claims, error) {
+func (m *JWTManager) AuthorizateUser(r *http.Request, SigningKey string) (*Claims, error) {
 	reqToken := r.Header.Get("Authorization")
 	splitToken := strings.Split(reqToken, "Bearer ")
 	if len(splitToken) < 2 {
@@ -79,7 +95,7 @@ func AuthorizateUser(r *http.Request, SigningKey string) (*Claims, error) {
 
 	reqToken = splitToken[1]
 
-	parsedData, err := ParseToken(reqToken, SigningKey)
+	parsedData, err := m.ParseToken(reqToken, SigningKey)
 	if err != nil {
 		return &Claims{}, err
 	}
