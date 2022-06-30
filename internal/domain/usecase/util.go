@@ -33,9 +33,7 @@ func CreateUserSession(userId uint, repo *repository.Repository, authManager *au
 	}
 
 	result.RefreshToken = refreshToken
-	repo.User.UpdateRefreshToken(userId, refreshToken)
-
-	return result, err
+	return result, repo.User.UpdateRefreshToken(userId, refreshToken)
 }
 
 func CreateTinkoffSandboxAccount(URL string, Token string, ctx context.Context) (string, error) {

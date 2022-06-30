@@ -10,7 +10,7 @@ type ShareDB struct {
 }
 
 func NewShareDB(db *gorm.DB) *ShareDB {
-	return &ShareDB{db: db}
+	return &ShareDB{db}
 }
 
 func (r *ShareDB) CreateShare(share *entity.Share) (uint, error) {

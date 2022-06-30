@@ -27,7 +27,6 @@ func New(filename string) (*Container, error) {
 	}
 
 	repo := repository.NewRepository(conn)
-
 	hasher := hash.NewHasher()
 	authManager := auth.NewAuth()
 

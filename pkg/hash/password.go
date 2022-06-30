@@ -1,8 +1,6 @@
 package hash
 
 import (
-	"fmt"
-
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -30,10 +28,7 @@ func NewPasswordsHasher() *PasswordsHasher {
 }
 
 func (h *PasswordsHasher) HashAndSalt(password string) string {
-	hash, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
-	if err != nil {
-		fmt.Println(err)
-	}
+	hash, _ := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	return string(hash)
 }
 

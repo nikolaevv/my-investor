@@ -93,7 +93,7 @@ func TestHandler_login(t *testing.T) {
 			},
 			mockCheckPassword: func(mockHash *mock_hash.MockPasswords, password string, passwordHash string) {
 			},
-			expectedStatusCode: 404,
+			expectedStatusCode: 403,
 		},
 		{
 			name:          "ERROR",
