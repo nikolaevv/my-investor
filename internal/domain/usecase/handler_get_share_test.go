@@ -9,11 +9,9 @@ import (
 	serviceСontainer "github.com/nikolaevv/my-investor/internal/domain/service/container"
 	"github.com/nikolaevv/my-investor/internal/domain/service/repository"
 	mock_repository "github.com/nikolaevv/my-investor/internal/domain/service/repository/mocks"
-	"github.com/nikolaevv/my-investor/pkg/auth"
 	mock_auth "github.com/nikolaevv/my-investor/pkg/auth/mocks"
 	"github.com/nikolaevv/my-investor/pkg/config"
 	"github.com/nikolaevv/my-investor/pkg/hash"
-	mock_hash "github.com/nikolaevv/my-investor/pkg/hash/mocks"
 	"github.com/sirupsen/logrus"
 	"github.com/stretchr/testify/assert"
 )
@@ -56,12 +54,11 @@ func TestHandler_getShare(t *testing.T) {
 			}
 
 			user := mock_repository.NewMockUser(c)
-			passwordsHasher := mock_hash.NewMockPasswords(c)
+			//passwordsHasher := mock_hash.NewMockPasswords(c)
 			JWTAuth := mock_auth.NewMockJWT(c)
 
-			hasher := &hash.Hasher{Passwords: passwordsHasher}
+			hasher := &hash.PasswordsHasher{}
 			repository := &repository.Repository{User: user}
-			authManager := &auth.Authentication{JWT: JWTAuth}
 
 			url := "/share"
 			r := gin.Default()
@@ -72,7 +69,7 @@ func TestHandler_getShare(t *testing.T) {
 				Router: r,
 				Repo:   repository,
 				Hasher: hasher,
-				Auth:   authManager,
+				Auth:   JWTAuth,
 			}
 			handler := NewHandler(container)
 

@@ -19,24 +19,6 @@ type Claims struct {
 	Id int `json:"id"`
 }
 
-//go:generate mockgen -source=manager.go -destination=mocks/mock.go
-type JWT interface {
-	CreateAccessToken(userId int, expireDuration time.Duration, signingKey string) (string, error)
-	CreateRefreshToken() (string, error)
-	ParseToken(accessToken string, signingKey string) (map[string]interface{}, error)
-	AuthorizateUser(headers http.Header, SigningKey string) (*Claims, error)
-}
-
-type Authentication struct {
-	JWT
-}
-
-func NewAuth() *Authentication {
-	return &Authentication{
-		JWT: NewJWTManager(),
-	}
-}
-
 type JWTManager struct {
 }
 

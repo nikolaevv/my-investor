@@ -2,9 +2,7 @@ package usecase
 
 import (
 	serviceСontainer "github.com/nikolaevv/my-investor/internal/domain/service/container"
-	"github.com/nikolaevv/my-investor/pkg/auth"
 	"github.com/nikolaevv/my-investor/pkg/config"
-	"github.com/nikolaevv/my-investor/pkg/hash"
 )
 
 const (
@@ -14,8 +12,8 @@ const (
 type handler struct {
 	Repo   serviceСontainer.Repository
 	Config *config.Config
-	Hasher *hash.Hasher
-	Auth   *auth.Authentication
+	Hasher serviceСontainer.PasswordsHasher
+	Auth   serviceСontainer.JWTManager
 }
 
 func NewHandler(container *serviceСontainer.Container) *handler {

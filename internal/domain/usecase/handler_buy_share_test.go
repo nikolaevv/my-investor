@@ -18,7 +18,6 @@ import (
 	mock_auth "github.com/nikolaevv/my-investor/pkg/auth/mocks"
 	"github.com/nikolaevv/my-investor/pkg/config"
 	"github.com/nikolaevv/my-investor/pkg/hash"
-	mock_hash "github.com/nikolaevv/my-investor/pkg/hash/mocks"
 	"github.com/sirupsen/logrus"
 	"github.com/stretchr/testify/assert"
 )
@@ -96,11 +95,10 @@ func TestHandler_buyShare(t *testing.T) {
 			mockUser := mock_repository.NewMockUser(c)
 			testCase.mockGetUserById(mockUser, testCase.user)
 
-			passwordsHasher := mock_hash.NewMockPasswords(c)
+			//passwordsHasher := mock_hash.NewMockPasswords(c)
 
-			hasher := &hash.Hasher{Passwords: passwordsHasher}
+			hasher := &hash.PasswordsHasher{}
 			repository := &repository.Repository{User: mockUser, Share: mockShare}
-			authManager := &auth.Authentication{JWT: mockJWTAuth}
 
 			URL := "/share/order"
 			r := gin.Default()
@@ -111,7 +109,7 @@ func TestHandler_buyShare(t *testing.T) {
 				Router: r,
 				Repo:   repository,
 				Hasher: hasher,
-				Auth:   authManager,
+				Auth:   mockJWTAuth,
 			}
 			handler := NewHandler(container)
 			r.POST(URL, handler.BuyShare)

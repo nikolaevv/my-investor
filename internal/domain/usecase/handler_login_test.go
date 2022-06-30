@@ -15,7 +15,6 @@ import (
 	"github.com/nikolaevv/my-investor/pkg/auth"
 	mock_auth "github.com/nikolaevv/my-investor/pkg/auth/mocks"
 	"github.com/nikolaevv/my-investor/pkg/config"
-	"github.com/nikolaevv/my-investor/pkg/hash"
 	mock_hash "github.com/nikolaevv/my-investor/pkg/hash/mocks"
 	"github.com/sirupsen/logrus"
 	"github.com/stretchr/testify/assert"
@@ -144,9 +143,9 @@ func TestHandler_login(t *testing.T) {
 
 			testCase.mockSetRefreshToken(user)
 
-			hasher := &hash.Hasher{Passwords: passwordsHasher}
+			//hasher := &hash.PasswordsHasher{}
 			repository := &repository.Repository{User: user}
-			authManager := &auth.Authentication{JWT: JWTAuth}
+			//authManager := &auth.JWTManager{}
 
 			r := gin.Default()
 			container := &serviceСontainer.Container{
@@ -154,8 +153,8 @@ func TestHandler_login(t *testing.T) {
 				Logger: logrus.New(),
 				Router: r,
 				Repo:   repository,
-				Hasher: hasher,
-				Auth:   authManager,
+				Hasher: passwordsHasher,
+				Auth:   JWTAuth,
 			}
 			handler := NewHandler(container)
 

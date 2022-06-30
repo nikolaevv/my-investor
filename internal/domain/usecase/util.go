@@ -14,7 +14,7 @@ type Tokens struct {
 	RefreshToken string
 }
 
-func CreateUserSession(userId uint, repo serviceСontainer.Repository, authManager *auth.Authentication, cfg *config.Config) (Tokens, error) {
+func CreateUserSession(userId uint, repo serviceСontainer.Repository, authManager serviceСontainer.JWTManager, cfg *config.Config) (Tokens, error) {
 	var (
 		result Tokens
 		err    error
@@ -22,12 +22,12 @@ func CreateUserSession(userId uint, repo serviceСontainer.Repository, authManag
 
 	signingKey := cfg.Auth.JWTSecret
 
-	result.AccessToken, err = authManager.JWT.CreateAccessToken(int(userId), auth.AccessTokenExpireDuration, signingKey)
+	result.AccessToken, err = authManager.CreateAccessToken(int(userId), auth.AccessTokenExpireDuration, signingKey)
 	if err != nil {
 		return result, err
 	}
 
-	refreshToken, err := authManager.JWT.CreateRefreshToken()
+	refreshToken, err := authManager.CreateRefreshToken()
 	if err != nil {
 		return result, err
 	}

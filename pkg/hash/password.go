@@ -4,22 +4,6 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-//go:generate mockgen -source=password.go -destination=mocks/mock.go
-type Passwords interface {
-	HashAndSalt(password string) string
-	CheckPassword(password string, passwordHash string) error
-}
-
-type Hasher struct {
-	Passwords
-}
-
-func NewHasher() *Hasher {
-	return &Hasher{
-		Passwords: NewPasswordsHasher(),
-	}
-}
-
 type PasswordsHasher struct {
 }
 
