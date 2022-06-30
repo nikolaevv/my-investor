@@ -4,7 +4,7 @@ import "gorm.io/gorm"
 
 type Share struct {
 	gorm.Model
-	Code      string
+	Ticker    string
 	ClassCode string
 	User      User
 	UserID    uint

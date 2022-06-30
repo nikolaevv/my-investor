@@ -44,7 +44,7 @@ func TestHandler_buyShare(t *testing.T) {
 				ID: 1,
 			},
 			share: &entity.Share{
-				Code:      "GAZP",
+				Ticker:    "GAZP",
 				ClassCode: "TQBR",
 				UserID:    1,
 				Quantity:  1,

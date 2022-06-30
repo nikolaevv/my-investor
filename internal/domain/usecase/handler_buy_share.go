@@ -56,7 +56,7 @@ func addShareToPortfolio(h *handler, reqData *request.BuyingShare, userId uint) 
 	}
 
 	share.UserID = userId
-	share.Code = reqData.Id
+	share.Ticker = reqData.Id
 
 	return h.Repo.CreateShare(share)
 }
