@@ -25,7 +25,7 @@ func (h *handler) GetShare(c *gin.Context) {
 		return
 	}
 
-	shareData, err := getShareInfoByTicker(h, reqParams.ClassCode, reqParams.Id, c)
+	shareData, err := getShareInfoByTicker(c, h, reqParams.ClassCode, reqParams.Id)
 	if err != nil {
 		c.String(http.StatusNotFound, err.Error())
 		return

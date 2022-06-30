@@ -61,15 +61,15 @@ func addShareToPortfolio(h *handler, reqData *request.BuyingShare, userId uint) 
 	return h.Repo.Share.CreateShare(share)
 }
 
-func prepareResponse(ctx context.Context, h *handler, reqData *request.BuyingShare, shareData *investapi.ShareResponse, user *entity.User, shareId uint) (*investapi.PostOrderResponse, error) {
+func prepareResponse(ctx context.Context, h *handler, reqData *request.BuyingShare, figi, userAccountID, shareId string) (*investapi.PostOrderResponse, error) {
 	sandboxClient := investapi.CreateSandboxServiceClient(h.Config.Tinkoff.URL, h.Config.Tinkoff.Token)
 	return sandboxClient.PostSandboxOrder(ctx, &investapi.PostOrderRequest{
 		Quantity:  int64(reqData.Quantity),
-		Figi:      shareData.Instrument.Figi,
+		Figi:      figi,
 		Direction: investapi.OrderDirection_ORDER_DIRECTION_BUY,
-		AccountId: user.AccountID,
+		AccountId: userAccountID,
 		OrderType: investapi.OrderType_ORDER_TYPE_MARKET,
-		OrderId:   fmt.Sprint(shareId),
+		OrderId:   shareId,
 	})
 }
 
@@ -98,7 +98,10 @@ func (h *handler) BuyShare(c *gin.Context) {
 		return
 	}
 
-	resp, err := prepareResponse(c, h, reqData, shareData, user, shareId)
+	resp, err := prepareResponse(
+		c, h, reqData,
+		shareData.Instrument.Figi, user.AccountID, fmt.Sprint(shareId),
+	)
 	if err != nil {
 		c.String(http.StatusBadGateway, err.Error())
 		return
