@@ -6,7 +6,7 @@ import (
 	"github.com/nikolaevv/my-investor/internal/domain/service/repository"
 	"github.com/nikolaevv/my-investor/pkg/auth"
 	"github.com/nikolaevv/my-investor/pkg/config"
-	"github.com/nikolaevv/my-investor/pkg/tinkoff/investapi"
+	"github.com/nikolaevv/my-investor/pkg/gen/proto/tinkoff/investapi"
 )
 
 type Tokens struct {

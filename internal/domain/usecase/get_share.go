@@ -8,7 +8,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/nikolaevv/my-investor/internal/transport/dto/request"
-	"github.com/nikolaevv/my-investor/pkg/tinkoff/investapi"
+	"github.com/nikolaevv/my-investor/pkg/gen/proto/tinkoff/investapi"
 )
 
 func (h *handler) GetShare(c *gin.Context) {

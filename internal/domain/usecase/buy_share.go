@@ -10,7 +10,7 @@ import (
 	"github.com/jinzhu/copier"
 	"github.com/nikolaevv/my-investor/internal/domain/entity"
 	"github.com/nikolaevv/my-investor/internal/transport/dto/request"
-	"github.com/nikolaevv/my-investor/pkg/tinkoff/investapi"
+	"github.com/nikolaevv/my-investor/pkg/gen/proto/tinkoff/investapi"
 )
 
 func (h *handler) BuyShare(c *gin.Context) {

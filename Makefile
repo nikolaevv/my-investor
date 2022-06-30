@@ -12,6 +12,6 @@ test:
 
 .PHONY: tinkoff
 tinkoff:
-	protoc --go-grpc_out=pkg/tinkoff/investapi/ --go_out=pkg/tinkoff/investapi/ --proto_path=protos/ protos/*.proto
+	protoc --go-grpc_out=pkg/gen/proto/tinkoff/investapi/ --go_out=pkg/tinkoff/investapi/ --proto_path=proto/ proto/*.proto
 
 .DEFAULT_GOAL := build
