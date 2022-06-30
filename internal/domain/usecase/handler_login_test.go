@@ -126,26 +126,21 @@ func TestHandler_login(t *testing.T) {
 			c := gomock.NewController(t)
 			defer c.Finish()
 
-			user := mock_repository.NewMockUser(c)
-			testCase.mockGetUserByLogin(user, &testCase.user)
-
 			cfg, err := config.LoadConfig(RelativeConfigPath)
 			if err != nil {
 				panic(err)
 			}
 
+			// Mock data
+			user := mock_repository.NewMockUser(c)
+			testCase.mockGetUserByLogin(user, &testCase.user)
 			passwordsHasher := mock_hash.NewMockPasswords(c)
 			testCase.mockCheckPassword(passwordsHasher, testCase.inputPassword, testCase.user.PasswordHash)
-
 			JWTAuth := mock_auth.NewMockJWT(c)
 			testCase.mockCreateAccessToken(JWTAuth, cfg.Auth.JWTSecret)
 			testCase.mockCreateRefreshToken(JWTAuth)
-
 			testCase.mockSetRefreshToken(user)
-
-			//hasher := &hash.PasswordsHasher{}
 			repository := &repository.Repository{User: user}
-			//authManager := &auth.JWTManager{}
 
 			r := gin.Default()
 			container := &serviceСontainer.Container{

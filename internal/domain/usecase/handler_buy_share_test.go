@@ -75,28 +75,24 @@ func TestHandler_buyShare(t *testing.T) {
 			ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 			defer cancel()
 
+			// Create account
 			accountId, err := CreateTinkoffSandboxAccount(cfg.Tinkoff.URL, cfg.Tinkoff.Token, ctx)
 			if err != nil {
 				panic(err)
 			}
 			testCase.user.AccountID = accountId
 
+			// Mock data
 			claims := &auth.Claims{
 				Id: int(testCase.user.ID),
 			}
 			mockHeaders := http.Header{}
-
 			mockJWTAuth := mock_auth.NewMockJWT(c)
 			testCase.mockAuthorizateUser(mockJWTAuth, mockHeaders, claims, cfg.Auth.JWTSecret)
-
 			mockShare := mock_repository.NewMockShare(c)
 			testCase.mockCreateShare(mockShare, testCase.share)
-
 			mockUser := mock_repository.NewMockUser(c)
 			testCase.mockGetUserById(mockUser, testCase.user)
-
-			//passwordsHasher := mock_hash.NewMockPasswords(c)
-
 			hasher := &hash.PasswordsHasher{}
 			repository := &repository.Repository{User: mockUser, Share: mockShare}
 

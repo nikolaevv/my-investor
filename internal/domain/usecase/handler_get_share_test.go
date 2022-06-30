@@ -53,10 +53,9 @@ func TestHandler_getShare(t *testing.T) {
 				panic(err)
 			}
 
+			// Mock data
 			user := mock_repository.NewMockUser(c)
-			//passwordsHasher := mock_hash.NewMockPasswords(c)
 			JWTAuth := mock_auth.NewMockJWT(c)
-
 			hasher := &hash.PasswordsHasher{}
 			repository := &repository.Repository{User: user}
 
