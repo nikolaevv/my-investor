@@ -10,7 +10,7 @@ import (
 	"github.com/nikolaevv/my-investor/internal/transport/dto/request"
 )
 
-func prepareSignUpReq(c *gin.Context) (*request.UserAuth, error) {
+func prepareAuthReq(c *gin.Context) (*request.UserAuth, error) {
 	var req request.UserAuth
 	if err := c.BindJSON(&req); err != nil {
 		return nil, err
@@ -41,7 +41,7 @@ func registerUser(ctx context.Context, h *handler, reqData *request.UserAuth) (u
 }
 
 func (h *handler) SignUp(c *gin.Context) {
-	reqData, err := prepareSignUpReq(c)
+	reqData, err := prepareAuthReq(c)
 	if err != nil {
 		c.String(http.StatusBadRequest, err.Error())
 		return

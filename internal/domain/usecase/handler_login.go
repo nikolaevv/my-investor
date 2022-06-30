@@ -23,7 +23,7 @@ func authenticateUser(h *handler, reqData *request.UserAuth) (*entity.User, erro
 }
 
 func (h *handler) Login(c *gin.Context) {
-	reqData, err := prepareSignUpReq(c)
+	reqData, err := prepareAuthReq(c)
 	if err != nil {
 		c.String(http.StatusBadRequest, err.Error())
 		return
