@@ -137,7 +137,7 @@ func TestHandler_login(t *testing.T) {
 			passwordsHasher := mock_hash.NewMockPasswords(c)
 			testCase.mockCheckPassword(passwordsHasher, testCase.inputPassword, testCase.user.PasswordHash)
 			JWTAuth := mock_auth.NewMockJWT(c)
-			testCase.mockCreateAccessToken(JWTAuth, cfg.Auth.JWTSecret)
+			testCase.mockCreateAccessToken(JWTAuth, cfg.GetString("Auth.JWTSecret"))
 			testCase.mockCreateRefreshToken(JWTAuth)
 			testCase.mockSetRefreshToken(user)
 			repository := &repository.Repository{User: user}

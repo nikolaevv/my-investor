@@ -29,7 +29,7 @@ func registerUser(ctx context.Context, h *handler, reqData *request.UserAuth) (u
 	}
 
 	// creating sandbox stock account
-	accountId, err := CreateTinkoffSandboxAccount(h.Config.Tinkoff.URL, h.Config.Tinkoff.Token, ctx)
+	accountId, err := CreateTinkoffSandboxAccount(h.Config.GetString("Tinkoff.URL"), h.Config.GetString("Tinkoff.Token"), ctx)
 	if err != nil {
 		return 0, nil
 	}

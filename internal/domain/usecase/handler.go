@@ -11,9 +11,10 @@ const (
 
 type handler struct {
 	Repo   serviceСontainer.Repository
-	Config *config.Config
+	Config config.Config
 	Hasher serviceСontainer.PasswordsHasher
 	Auth   serviceСontainer.JWTManager
+	Logger serviceСontainer.Logger
 }
 
 func NewHandler(container *serviceСontainer.Container) *handler {
@@ -22,5 +23,6 @@ func NewHandler(container *serviceСontainer.Container) *handler {
 		Repo:   container.Repo,
 		Hasher: container.Hasher,
 		Auth:   container.Auth,
+		Logger: container.Logger,
 	}
 }

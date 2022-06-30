@@ -41,9 +41,9 @@ func New(filename string) (*Container, error) {
 }
 
 type Container struct {
-	Config *config.Config
-	Logger *logrus.Logger
-	Router *gin.Engine
+	Config config.Config
+	Logger Logger
+	Router Router
 	Repo   Repository
 	Hasher PasswordsHasher
 	Auth   JWTManager

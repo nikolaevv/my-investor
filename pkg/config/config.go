@@ -6,7 +6,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-func LoadConfig(filename string) (*Config, error) {
+func LoadConfig(filename string) (*viper.Viper, error) {
 	v := viper.New()
 
 	v.SetConfigFile(filename)
@@ -18,17 +18,5 @@ func LoadConfig(filename string) (*Config, error) {
 		}
 		return nil, err
 	}
-
-	return ParseConfig(v)
-}
-
-func ParseConfig(v *viper.Viper) (*Config, error) {
-	var c Config
-
-	err := v.Unmarshal(&c)
-	if err != nil {
-		return nil, err
-	}
-
-	return &c, nil
+	return v, nil
 }

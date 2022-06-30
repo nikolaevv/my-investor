@@ -13,7 +13,7 @@ import (
 )
 
 func getUser(h *handler, headers http.Header) (*entity.User, error) {
-	signingKey := h.Config.Auth.JWTSecret
+	signingKey := h.Config.GetString("Auth.JWTSecret")
 	claims, err := h.Auth.AuthorizateUser(headers, signingKey)
 	if err != nil {
 		return nil, err
@@ -37,7 +37,7 @@ func prepareBuyShareReq(c *gin.Context) (*request.BuyingShare, error) {
 }
 
 func getShareInfoByTicker(ctx context.Context, h *handler, classCode, id string) (*investapi.ShareResponse, error) {
-	instrumentClient := investapi.CreateInstrumentsServiceClient(h.Config.Tinkoff.URL, h.Config.Tinkoff.Token)
+	instrumentClient := investapi.CreateInstrumentsServiceClient(h.Config.GetString("Tinkoff.URL"), h.Config.GetString("Tinkoff.Token"))
 
 	gettingShareReq := investapi.InstrumentRequest{
 		IdType:    investapi.InstrumentIdType_INSTRUMENT_ID_TYPE_TICKER,
@@ -62,7 +62,7 @@ func addShareToPortfolio(h *handler, reqData *request.BuyingShare, userId uint) 
 }
 
 func prepareResponse(ctx context.Context, h *handler, quantity int64, figi, userAccountID, shareId string) (*investapi.PostOrderResponse, error) {
-	sandboxClient := investapi.CreateSandboxServiceClient(h.Config.Tinkoff.URL, h.Config.Tinkoff.Token)
+	sandboxClient := investapi.CreateSandboxServiceClient(h.Config.GetString("Tinkoff.URL"), h.Config.GetString("Tinkoff.Token"))
 	return sandboxClient.PostSandboxOrder(ctx, &investapi.PostOrderRequest{
 		Quantity:  quantity,
 		Figi:      figi,

@@ -14,13 +14,13 @@ type Tokens struct {
 	RefreshToken string
 }
 
-func CreateUserSession(userId uint, repo serviceСontainer.Repository, authManager serviceСontainer.JWTManager, cfg *config.Config) (Tokens, error) {
+func CreateUserSession(userId uint, repo serviceСontainer.Repository, authManager serviceСontainer.JWTManager, cfg config.Config) (Tokens, error) {
 	var (
 		result Tokens
 		err    error
 	)
 
-	signingKey := cfg.Auth.JWTSecret
+	signingKey := cfg.GetString("Auth.JWTSecret")
 
 	result.AccessToken, err = authManager.CreateAccessToken(int(userId), auth.AccessTokenExpireDuration, signingKey)
 	if err != nil {
