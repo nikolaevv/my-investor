@@ -130,7 +130,7 @@ func TestHandler_login(t *testing.T) {
 			user := mock_repository.NewMockUser(c)
 			testCase.mockGetUserByLogin(user, &testCase.user)
 
-			cfg, err := config.LoadConfig(*ConfigPath)
+			cfg, err := config.LoadConfig(RelativeConfigPath)
 			if err != nil {
 				panic(err)
 			}

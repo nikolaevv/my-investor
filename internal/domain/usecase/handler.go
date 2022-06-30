@@ -1,7 +1,6 @@
 package usecase
 
 import (
-	"flag"
 	serviceСontainer "github.com/nikolaevv/my-investor/internal/domain/service/container"
 	"github.com/nikolaevv/my-investor/internal/domain/service/repository"
 	"github.com/nikolaevv/my-investor/pkg/auth"
@@ -9,8 +8,8 @@ import (
 	"github.com/nikolaevv/my-investor/pkg/hash"
 )
 
-var (
-	ConfigPath = flag.String("configPath", "../../../configs/app.json", "path to config file")
+const (
+	RelativeConfigPath = "../../../configs/app.json"
 )
 
 type handler struct {

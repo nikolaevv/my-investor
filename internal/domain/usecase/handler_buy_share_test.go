@@ -68,7 +68,7 @@ func TestHandler_buyShare(t *testing.T) {
 			c := gomock.NewController(t)
 			defer c.Finish()
 
-			cfg, err := config.LoadConfig(*ConfigPath)
+			cfg, err := config.LoadConfig(RelativeConfigPath)
 			if err != nil {
 				panic(err)
 			}
