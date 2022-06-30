@@ -3,7 +3,7 @@ package usecase
 import (
 	"context"
 
-	"github.com/nikolaevv/my-investor/internal/domain/service/repository"
+	serviceСontainer "github.com/nikolaevv/my-investor/internal/domain/service/container"
 	"github.com/nikolaevv/my-investor/pkg/auth"
 	"github.com/nikolaevv/my-investor/pkg/config"
 	"github.com/nikolaevv/my-investor/pkg/gen/proto/tinkoff/investapi"
@@ -14,7 +14,7 @@ type Tokens struct {
 	RefreshToken string
 }
 
-func CreateUserSession(userId uint, repo *repository.Repository, authManager *auth.Authentication, cfg *config.Config) (Tokens, error) {
+func CreateUserSession(userId uint, repo serviceСontainer.Repository, authManager *auth.Authentication, cfg *config.Config) (Tokens, error) {
 	var (
 		result Tokens
 		err    error
@@ -33,7 +33,7 @@ func CreateUserSession(userId uint, repo *repository.Repository, authManager *au
 	}
 
 	result.RefreshToken = refreshToken
-	return result, repo.User.UpdateRefreshToken(userId, refreshToken)
+	return result, repo.UpdateRefreshToken(userId, refreshToken)
 }
 
 func CreateTinkoffSandboxAccount(URL string, Token string, ctx context.Context) (string, error) {

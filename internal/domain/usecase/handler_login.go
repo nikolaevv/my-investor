@@ -10,7 +10,7 @@ import (
 )
 
 func authenticateUser(h *handler, reqData *request.UserAuth) (*entity.User, error) {
-	user, err := h.Repo.User.GetUserByLogin(reqData.Login)
+	user, err := h.Repo.GetUserByLogin(reqData.Login)
 	if err != nil {
 		return nil, err
 	}

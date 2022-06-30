@@ -11,6 +11,11 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+type Repository interface {
+	repository.User
+	repository.Share
+}
+
 func New(filename string) (*Container, error) {
 	cfg, err := config.LoadConfig(filename)
 	if err != nil {
@@ -44,7 +49,7 @@ type Container struct {
 	Config *config.Config
 	Logger *logrus.Logger
 	Router *gin.Engine
-	Repo   *repository.Repository
+	Repo   Repository
 	Hasher *hash.Hasher
 	Auth   *auth.Authentication
 }

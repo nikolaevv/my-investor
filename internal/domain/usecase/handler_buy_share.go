@@ -18,7 +18,7 @@ func getUser(h *handler, headers http.Header) (*entity.User, error) {
 	if err != nil {
 		return nil, err
 	}
-	user, err := h.Repo.User.GetUserByID(claims.Id)
+	user, err := h.Repo.GetUserByID(claims.Id)
 	if err != nil {
 		return nil, err
 	}
@@ -58,7 +58,7 @@ func addShareToPortfolio(h *handler, reqData *request.BuyingShare, userId uint) 
 	share.UserID = userId
 	share.Code = reqData.Id
 
-	return h.Repo.Share.CreateShare(share)
+	return h.Repo.CreateShare(share)
 }
 
 func prepareResponse(ctx context.Context, h *handler, reqData *request.BuyingShare, figi, userAccountID, shareId string) (*investapi.PostOrderResponse, error) {

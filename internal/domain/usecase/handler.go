@@ -2,7 +2,6 @@ package usecase
 
 import (
 	serviceСontainer "github.com/nikolaevv/my-investor/internal/domain/service/container"
-	"github.com/nikolaevv/my-investor/internal/domain/service/repository"
 	"github.com/nikolaevv/my-investor/pkg/auth"
 	"github.com/nikolaevv/my-investor/pkg/config"
 	"github.com/nikolaevv/my-investor/pkg/hash"
@@ -13,7 +12,7 @@ const (
 )
 
 type handler struct {
-	Repo   *repository.Repository
+	Repo   serviceСontainer.Repository
 	Config *config.Config
 	Hasher *hash.Hasher
 	Auth   *auth.Authentication

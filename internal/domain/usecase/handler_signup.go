@@ -37,7 +37,7 @@ func registerUser(ctx context.Context, h *handler, reqData *request.UserAuth) (u
 	user.AccountID = accountId
 	user.PasswordHash = h.Hasher.Passwords.HashAndSalt(reqData.Password)
 
-	return h.Repo.User.CreateUser(user)
+	return h.Repo.CreateUser(user)
 }
 
 func (h *handler) SignUp(c *gin.Context) {
