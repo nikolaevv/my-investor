@@ -1,10 +1,10 @@
 .PHONY: build
 build:
-	go build -o main -v ./cmd/server
+	go build -o main -v ./cmd
 
 .PHONY: run
 run:
-	go build -o main -v ./cmd/server && ./main
+	go build -o main -v ./cmd && ./main
 
 .PHONY: test
 test:
