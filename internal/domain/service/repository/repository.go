@@ -24,7 +24,7 @@ type Repository struct {
 
 func NewRepository(db *gorm.DB) *Repository {
 	return &Repository{
-		User:  NewUserDB(db),
-		Share: NewShareDB(db),
+		User:  NewUser(db),
+		Share: NewShare(db),
 	}
 }

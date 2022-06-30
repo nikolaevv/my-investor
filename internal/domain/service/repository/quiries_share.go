@@ -5,15 +5,15 @@ import (
 	"gorm.io/gorm"
 )
 
-type ShareDB struct {
+type share struct {
 	db *gorm.DB
 }
 
-func NewShareDB(db *gorm.DB) *ShareDB {
-	return &ShareDB{db}
+func NewShare(db *gorm.DB) *share {
+	return &share{db}
 }
 
-func (r *ShareDB) CreateShare(share *entity.Share) (uint, error) {
+func (r *share) CreateShare(share *entity.Share) (uint, error) {
 	result := r.db.Create(share)
 	return share.ID, result.Error
 }
