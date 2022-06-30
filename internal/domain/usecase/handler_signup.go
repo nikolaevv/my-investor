@@ -21,7 +21,7 @@ func prepareSignUpReq(c *gin.Context) (*request.UserAuth, error) {
 	return &req, nil
 }
 
-func registerUser(h *handler, reqData *request.UserAuth, ctx context.Context) (uint, error) {
+func registerUser(ctx context.Context, h *handler, reqData *request.UserAuth) (uint, error) {
 	user := &entity.User{}
 	err := copier.Copy(user, reqData)
 	if err != nil {
@@ -47,7 +47,7 @@ func (h *handler) SignUp(c *gin.Context) {
 		return
 	}
 
-	userId, err := registerUser(h, reqData, c)
+	userId, err := registerUser(c, h, reqData)
 	if err != nil {
 		c.String(http.StatusBadRequest, err.Error())
 		return

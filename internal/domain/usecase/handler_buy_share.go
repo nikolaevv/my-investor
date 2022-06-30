@@ -36,7 +36,7 @@ func prepareBuyShareReq(c *gin.Context) (*request.BuyingShare, error) {
 	return &req, nil
 }
 
-func getShareInfoByTicker(h *handler, сlassCode string, id string, ctx context.Context) (*investapi.ShareResponse, error) {
+func getShareInfoByTicker(ctx context.Context, h *handler, сlassCode string, id string) (*investapi.ShareResponse, error) {
 	instrumentClient := investapi.CreateInstrumentsServiceClient(h.Config.Tinkoff.URL, h.Config.Tinkoff.Token)
 
 	gettingShareReq := investapi.InstrumentRequest{
@@ -61,7 +61,7 @@ func addShareToPortfolio(h *handler, reqData *request.BuyingShare, userId uint) 
 	return h.Repo.Share.CreateShare(share)
 }
 
-func prepareResponse(h *handler, reqData *request.BuyingShare, shareData *investapi.ShareResponse, user *entity.User, shareId uint, ctx context.Context) (*investapi.PostOrderResponse, error) {
+func prepareResponse(ctx context.Context, h *handler, reqData *request.BuyingShare, shareData *investapi.ShareResponse, user *entity.User, shareId uint) (*investapi.PostOrderResponse, error) {
 	sandboxClient := investapi.CreateSandboxServiceClient(h.Config.Tinkoff.URL, h.Config.Tinkoff.Token)
 	return sandboxClient.PostSandboxOrder(ctx, &investapi.PostOrderRequest{
 		Quantity:  int64(reqData.Quantity),
@@ -86,7 +86,7 @@ func (h *handler) BuyShare(c *gin.Context) {
 		return
 	}
 
-	shareData, err := getShareInfoByTicker(h, reqData.ClassCode, reqData.Id, c)
+	shareData, err := getShareInfoByTicker(c, h, reqData.ClassCode, reqData.Id)
 	if err != nil {
 		c.String(http.StatusNotFound, err.Error())
 		return
@@ -98,7 +98,7 @@ func (h *handler) BuyShare(c *gin.Context) {
 		return
 	}
 
-	resp, err := prepareResponse(h, reqData, shareData, user, shareId, c)
+	resp, err := prepareResponse(c, h, reqData, shareData, user, shareId)
 	if err != nil {
 		c.String(http.StatusBadGateway, err.Error())
 		return
