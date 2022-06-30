@@ -9,9 +9,6 @@ import (
 	"gorm.io/gorm"
 )
 
-type Entity interface {
-}
-
 func NewConnection(config *config.Config, entities ...interface{}) (*gorm.DB, error) {
 	conn, err := connect(config)
 	if err != nil {
