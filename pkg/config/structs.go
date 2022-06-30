@@ -4,17 +4,12 @@ type Config struct {
 	App     Application
 	DB      Database
 	Auth    Auth
-	Log     Logger
 	Tinkoff TinkoffAPI
 }
 
 type Application struct {
 	Host string
 	Port string
-}
-
-type Logger struct {
-	Level string
 }
 
 type Database struct {
