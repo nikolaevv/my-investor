@@ -36,12 +36,12 @@ func prepareBuyShareReq(c *gin.Context) (*request.BuyingShare, error) {
 	return &req, nil
 }
 
-func getShareInfoByTicker(ctx context.Context, h *handler, сlassCode string, id string) (*investapi.ShareResponse, error) {
+func getShareInfoByTicker(ctx context.Context, h *handler, classCode string, id string) (*investapi.ShareResponse, error) {
 	instrumentClient := investapi.CreateInstrumentsServiceClient(h.Config.Tinkoff.URL, h.Config.Tinkoff.Token)
 
 	gettingShareReq := investapi.InstrumentRequest{
 		IdType:    investapi.InstrumentIdType_INSTRUMENT_ID_TYPE_TICKER,
-		ClassCode: сlassCode,
+		ClassCode: classCode,
 		Id:        id,
 	}
 
